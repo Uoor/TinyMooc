@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="sicd" uri="/sicd-tags"%>	
+<%@taglib prefix="sicd" uri="/sicd-tags"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,59 +20,27 @@
 <script src="<c:url value="/resource/js/jquery.flot.resize.min.js"/>"></script>
 <script src="<c:url value="/resource/js/jquery.peity.min.js"/>"></script>
 <script src="<c:url value="/resource/js/unicorn.js"/>"></script>
-<script type="text/javascript">
-	$(function(){
-			var flag = 0;
-		$("#fabu").click(function(){
-			var cous=$("#cosId").val();
+<title>搜索结果 - 萌课网</title>
+    <script type="text/javascript">
 
-			$(".status").each(function(){
-				var sta=$(this).html();				               
-				//alert(sta);
-             if(sta=="申请中" ){
-             		 flag = 1;
-                   alert("还有课时没有通过，不能发布！");
-                   return false;
-                 }	//alert(sta);
-               
-				});
-			if (flag == 0) {
-			 alert("success！");
-                   location.href="alterCourseState.htm?courseId="+cous+"&type=1";
-			}
-			
-                	
-
-			});
-
-		$("#del").click(function(){
-			alert("封禁课程");
-				var cous=$("#cosId").val();
-			location.href="alterCourseState.htm?courseId="+cous+"&type=2";
-
-			});
-
-		});
-
-    function _search()
-    {
-        var form = document.form1;
-        form.searchValue.value = (form.searchValue.value).replace(/[&\|\\\*^%$#@\-]/g,"");
-        if(form.searchValue.value.trim() == '')
+        function _search()
         {
-            alert("输入需要搜索关键字！");
-            return false;
+            var form = document.form1;
+            form.searchValue.value = (form.searchValue.value).replace(/[&\|\\\*^%$#@\-]/g,"");
+            if(form.searchValue.value == '')
+            {
+                alert("输入需要搜索关键字！");
+                return false;
+            }
+            form.action ='searchCourseIndex.htm';
         }
-        form.action ='searchCourseIndex.htm';
-    }
-
-</script>
-<title>用户管理 - 萌课网</title>
+    </script>
 </head>
 <body>
 <div id="header">
 			<h1><a href="">MicroCourse Admin</a></h1>		
 		</div>
+
 <form name="form1"  method="post" onsubmit="return _search()">
     <div id="search">
         <input type="text" name="searchValue"  placeholder="Search here..." /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
@@ -133,70 +102,50 @@
 		</div>
 		<div id="content">
 			<div id="content-header">
-				<h1>课程管理</h1>
+				<h1>课程搜索结果</h1>
 			</div>
-			<div id="breadcrumb">
-				<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>首页</a>
-				<a href="#">课程管理</a>
-				<a href="#">申请中的课程</a>
-				<a href="#" class="current">申请中的课时</a>
-			</div>
+
 			<div class="container-fluid">
 				<div class="page">
 		<div class="page-container">
 			<div class="container">
 				<div class="row">
 					<div class="span12">						
-						<h4 class="header">申请中的课程课程名：${course.courseTitle}</h4>
-						<input type="hidden" value="${course.courseId}" id="cosId">
-						<table class="table table-striped sortable" id="tab" >
+						<h4 class="header">申请中的课程</h4>
+						
+						<table class="table table-striped sortable" >
 							<thead>
 								<tr>
-									<th>课时标题</th>
-									<th>所属课程</th>
-									<th>课时简介</th>
-									<th>课时号</th>
-									<th>浏览次数</th>
-									<th>申请时间</th>
+									<th>课程标题</th>
+								
+									<th>课程简介</th>
+									<th>课程类型</th>	
+
 									<th>状态</th>
-									<th>操作</th>
+
 								</tr>
 							</thead>
-							<tbody id="a">
-							<c:forEach items="${course.courses}" var="courseList">
+							<tbody>
+							<c:forEach items="${SearchCourselist}" var="SearchCourselist" >
 								<tr>
-									<td style="text-align:center;"><c:out value="${courseList.courseTitle}"/></td>
-									<td style="text-align:center;"><c:out value="${courseList.course.courseTitle}"/></td>
-									<td style="text-align:center;"><c:out value="${courseList.courseIntro}"/></td>
-									<td style="text-align:center;"><c:out value="${courseList.lessonNum}"/></td>
-									<td style="text-align:center;"><c:out value="${courseList.scanNum}"/></td>
-									<td style="text-align:center;"><c:out value="${courseList.applyDate}"/></td>
-									<td class="status" style="text-align:center;">${courseList.courseState}</td>
-									<td style="text-align:center;">
-											<a class="btn success" href="alterCourseState.htm?courseId=${courseList.courseId}&type=6">批准</a>
-											
-									</td>
+									<td style="text-align:center;"><a class="btn success" href="turnToLessonManage.htm?courseId=${SearchCourselist.courseId}"><c:out  value="${SearchCourselist.courseTitle}"/></a></td>
+									
+									<td style="text-align:center;"><a class="btn success" href="turnToLessonManage.htm?courseId=${SearchCourselist.courseId}"><c:out value="${SearchCourselist.courseIntro}"/></a></td>
+									<td style="text-align:center;"><c:out value="${SearchCourselist.type}"/></td>
+
+									<td style="text-align:center;"><c:out value="${SearchCourselist.courseState}"/></td>
+
 								</tr>
 								</c:forEach>							
 							</tbody>
 						</table>
-						<div class="pagination pagination-centered">
-						
-						<ul>
-						<li><sicd:page curPage="${curPage}" url="${url}" totalPage="${totalPage}" /></li>
-						</ul>
-						</div>
-						<div >
-						<ul style="list-style: none;">
-							<li>
-						
-							<button class="btn btn-success" id="fabu">发布课程</button>
-							<button class="btn" id="del">封禁课程</button>
-							</li>
-						</ul>
-						
-						</div>
-					</div>
+                        <div class="pagination pagination-centered">
+                            <ul>
+                                <li><sicd:page curPage="${curPage}" url="${url}&searchValue=${searchValue}" totalPage="${totalPage}" /></li>
+                            </ul>
+                        </div>
+
+                    </div>
 				</div>
 			</div>
 		</div>

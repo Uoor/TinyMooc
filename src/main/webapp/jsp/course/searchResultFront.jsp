@@ -44,7 +44,7 @@
         {
             var form = document.form1;
             form.searchValue.value = (form.searchValue.value).replace(/[&\|\\\*^%$#@\-]/g,"");
-            if(form.searchValue.value.trim() == '')
+            if(form.searchValue.value == '')
             {
                 alert("输入需要搜索关键字！");
                 return false;
@@ -169,7 +169,7 @@
 <body>
 <div class="wrapper">
     <header id="header">
-        <h1><a href="http://localhost:8092/turnToHomePage.htm" target="_blank"></a></h1>
+
         <nav>
             <div class="pages">
                 <ul class="header-nav">
@@ -208,10 +208,11 @@
                 </form>--%>
                 <form name="form1" class="search-form"  method="post" onsubmit="return _search()">
 
-                        <input type="text" name="searchValue" class="search-input" placeholder="想学什么？搜搜看..." >
-                        <input type="submit" class="search-btn" value="">
+                    <input type="text" name="searchValue" class="search-input" placeholder="想学什么？搜搜看..." >
+                    <input type="submit" class="search-btn" value="">
 
                 </form>
+
 
 
             </div>
@@ -227,210 +228,40 @@
 
 
 
-<section id="home">
-    <!-- All replaced with images in the CSS -->
-    <a data-offset="100" class="scroll why_the_apos hoverable">Why the apostrophe and more about us&hellip;</a>
-    <!--<p class="gourmet_dips">Gourmet dips without the fuss</p>-->
-    <a class="product_award1" target="_blank" >Product Awards</a>
-    <a class="product_award2" target="_blank" >Product Awards</a>
-    <a class="product_award3" >Quality Food Awards</a>
-    <!--<a href="#contact" data-offset="-150" class="share_thoughts hoverable scroll">Share your thoughts with us</a>-->
-    <span class="better_shared">Some things are better shared</span>
-    <a class="scroll whats_your_gnosh hoverable" data-offset-minus="60">What&#8217;s your G&#8217;nosh?</a>
-    <a class="where_to_gnosh hoverable">Where to G&#8217;NOSH?</a>
-    <span class="tomato_dip"></span>
-    <span class="garlic"></span>
-    <span class="pepper"></span>
-    <span class="basil"></span>
-    <a href="#" class="keep_up"></a>
-
-    <!-- Twitter box -->
-    <div class="twitter">
-        <ul id="tweets">
-        </ul>
-        <div class="extras">
-            <p> FOLLOW TINYMOOC!
-            </p>
-        </div>
-    </div>
-
-
-    <article class="news"><h1 style="font-size: 18px;text-transform:none;"></h1>
-        <time datetime="2012-05-31">15/12/21</time>
-        <p>让我们把学习回归到最质朴、最纯净的状态，满足人类对未知世界的求知欲。</br>
-            宇宙那么大，我们没弄懂的事情还多着呢。<br/> -- 萌课网</p>
-
-    </article>
-
-
-</section><!-- end #home -->
-
-<section id="flavours">
-    <div class="whats-your-gnosh">
 
 
 
-        <a class="flavours-original"></a>
-        <!--<a href="#" class="flavours-dippables"></a>-->
-        <a class="flavours-tapas"></a>
-        <a class="flavours-mm"></a>
 
-        <a href="#" class="arrow-lt-flav"></a>
-        <a href="#" class="arrow-rt-flav"></a>
 
-        <ul id="flav_mm_slide" class="flav-slide">
-            <li class="display-slide">
-                <img src="http://files.bbs.tl.changyou.com/data/attachment/forum/201512/29/215028j60su9u6kkpesyez.png" class="flav-slide-pics" />
-						<span class="text_wrap">
-						<h2>I am in TINYMOOC.</h2>
-						<p>我们有精心制作的视频课程<br />
-                        </p>
-						</span>
-            </li>
 
-            <li>
-                <img src="http://files.bbs.tl.changyou.com/data/attachment/forum/201512/28/155616lfv2dbodztbfd1ob.png" class="flav-slide-pics" />
-						<span class="text_wrap">
-						<h2>I am in TINYMOOC.</h2>
-						<p>我们有实时交互的学习资料<br />
-                        </p>
-						</span>
-            </li>
 
-            <li>
-                <img src="http://files.bbs.tl.changyou.com/data/attachment/forum/201512/29/215112qy4hc96xoiqboxpo.png" class="flav-slide-pics" />
-						<span class="text_wrap">
-						<h2>I am in TINYMOOC.</h2>
-						<p>我们有循序渐进的学习计划<br />
-                        </p>
-						</span>
-            </li>
 
-            <li>
-                <img src="http://files.bbs.tl.changyou.com/data/attachment/forum/201512/29/215106bh54d3kr58ukkdoz.png" class="flav-slide-pics" />
-						<span class="text_wrap">
-						<h2>I am in TINYMOOC.</h2>
-						<p>我们有互帮互助的问答社区 <br />
-                        </p>
-						</span>
-            </li>
-        </ul>
-    </div>
-
-</section>
-
-<section id="why-gnosh">
-    <div class="why-gnosh-movies1">
-    </div>
 
     <div class="flat clearfix">
-        <h2><strong>热门课程 | 瞧瞧大家都在学啥&nbsp;(～￣▽￣)～</strong></h2>
+        <h2><strong>课程(～￣▽￣)～</strong></h2>
         <ul class="cells cells-middle">
-            <c:forEach items="${hotCourseList}" var="hotCourse">
+            <c:forEach items="${SearchCourselist}" var="newCourse" varStatus="iter">
                 <li class="cell">
                     <div class="course-item">
                         <div class="thumb">
-                            <a href="courseDetailPage.htm?courseId=${hotCourse.course.courseId}"><img src="${hotCourse.course.logoUrl}"/></a>
+                            <a href="courseDetailPage.htm?courseId=${newCourse.courseId}"><img src="${newCourse.logoUrl}"/></a>
                         </div>
                         <p class="title">
-                            <a href="courseDetailPage.htm?courseId=${hotCourse.course.courseId}"><span class="video" title="视频课程"></span>${hotCourse.course.courseTitle}</a>
+                            <a href="courseDetailPage.htm?courseId=${newCourse.courseId}"><span class="video" title="视频课程"></span>${newCourse.courseTitle}</a>
                         </p>
-                        <div class="summary">${hotCourse.course.courseIntro}</div>
-                        <p class="metas clearfix">
-                            <span title="查看次数" style="float: right;"><i class="icon-signal"></i>${hotCourse.course.scanNum}</span>
-							<span class="fl by">by
-								<a href="goPersonal.htm?userId=${hotCourse.user.userId}" class="show-user-card" title="查看该用户">${hotCourse.user.userName}</a>
-							</span>
-                        </p>
+                        <div class="summary">${newCourse.courseIntro}</div>
+
                     </div>
                 </li>
             </c:forEach>
         </ul>
     </div>
 
-    <div class="why-gnosh-movies">
-    </div>
 
-    <div class="flat clearfix">
-        <h2><strong>最新课程 | 哇塞，又有新课开放了，赶紧学起来&nbsp;(～￣▽￣)～</strong></h2>
-        <ul class="cells cells-middle">
-            <c:forEach items="${newCourseList}" var="newCourse" varStatus="iter">
-                <li class="cell">
-                    <div class="course-item">
-                        <div class="thumb">
-                            <a href="courseDetailPage.htm?courseId=${newCourse.course.courseId}"><img src="${newCourse.course.logoUrl}"/></a>
-                        </div>
-                        <p class="title">
-                            <a href="courseDetailPage.htm?courseId=${newCourse.course.courseId}"><span class="video" title="视频课程"></span>${newCourse.course.courseTitle}</a>
-                        </p>
-                        <div class="summary">${newCourse.course.courseIntro}</div>
-                        <p class="metas clearfix">
-                            <span title="查看次数" style="float: right;"><i class="icon-signal"></i>${newCourse.course.scanNum}</span>
-							<span class="fl by">by
-								<a href="#" class="show-user-card" title="">${newCourse.user.userName}</a>
-							</span>
-                        </p>
-                    </div>
-                </li>
-            </c:forEach>
-        </ul>
-    </div>
 
-    <!-- 话题、小组 -->
-    <div class="why-gnosh-movies">
-    </div>
 
-    <div class="flat clearfix">
-        <h2><strong>话题、小组&nbsp;╰(￣▽￣)╭</strong></h2>
-        <div class="flat-main">
-            <h3>最新话题</h3>
-            <div class="discuss-list2">
-                <ul>
-                    <c:forEach items="${discussList}" var="discuss">
-                        <li>
-                            <div class="imageblock clearfix">
-                                <div class="imageblock-image">
-                                    <img src="${discuss.user.headImage.imageSmall}" title="${discuss.user.userName}">
-                                </div>
-                                <div class="imageblock-content">
 
-                                    <p class="title">
-                                        <a href="discussDetailPage.htm?discussId=${discuss.discussId}"><span style="color: rgb(102, 194, 160)">${discuss.topic}</span></a>
-                                    </p>
-                                    <p class="metas">
-                                        <a href="teamHomePage.htm?teamId=${discuss.team.teamId}" title="来自『${discuss.team.teamName}』小组"
-                                           class="mrm">${discuss.team.teamName}</a> by <a
-                                            href="goPersonal.htm?userId=${discuss.user.userId}"
-                                            class="show-user-card"  title="${discuss.user.userName}">${discuss.user.userName}</a><span
-                                            class="mhm">${discuss.scanNum}次查看</span>
-                                        <span class="mls">${discuss.publishDate}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </div>
-            <div class="discuss-list2" style="margin-top:15px;">
-                <h3>推荐小组 </h3>
-                <div class="metas">
-                    <ul class="grids smallpic-grids">
-                        <c:forEach items="${teamList}" var="team">
-                            <li class="grid"><img src="<c:url value="${team.headImage.imageSmall}"/>" title="${team.teamName}" class="thumb">
-                                <p>
-                                    <a href="teamHomePage.htm?teamId=${team.teamId}" title="${team.teamName}">${team.teamName}</a>
-                                </p>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
-        <!-- 推荐小组 -->
-    </div>
-
-</section>
 
     <jsp:include page="/jsp/include/foot.jsp"></jsp:include>
 
