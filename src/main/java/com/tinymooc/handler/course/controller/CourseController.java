@@ -6,6 +6,9 @@ import java.text.DecimalFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.asyncload.AsyncLoadConfig;
+import com.alibaba.asyncload.AsyncLoadExecutor;
+import com.alibaba.asyncload.impl.AsyncLoadEnhanceProxy;
 import com.tinymooc.authority.annotation.CheckAuthority;
 import com.tinymooc.common.domain.*;
 import com.tinymooc.common.tag.pageTag.PageHelper;
@@ -198,6 +201,36 @@ public class CourseController {
         User user = (User) req.getSession().getAttribute("user");
         if (user == null)
             return new ModelAndView("redirect:login.htm");
+
+       /* AsyncLoadTestService asyncLoadTestService = xxxxx;  //你原先的业务处理主体
+        // 初始化config
+        AsyncLoadConfig config = new AsyncLoadConfig(3 * 1000l);
+        // 初始化executor
+        AsyncLoadExecutor executor = new AsyncLoadExecutor(10, 100);
+        executor.initital();
+        // 初始化proxy
+        AsyncLoadEnhanceProxy<AsyncLoadTestService> proxy = new AsyncLoadEnhanceProxy<AsyncLoadTestService>();
+        proxy.setService(asyncLoadTestService); //传递你原先的业务对象
+        proxy.setConfig(config);
+        proxy.setExecutor(executor);
+
+        AsyncLoadTestService service = proxy.getProxy(); //获取到异步并行处理包装过的服务对象*/
+
+
+        AsyncLoadConfig config = new AsyncLoadConfig(3 * 1000l);
+        // 初始化executor
+        AsyncLoadExecutor executor = new AsyncLoadExecutor(10, 100);
+        executor.initital();
+        // 初始化proxy
+        AsyncLoadEnhanceProxy<CourseService> proxy = new AsyncLoadEnhanceProxy<CourseService>();
+        proxy.setService(courseService);
+        proxy.setConfig(config);
+        proxy.setExecutor(executor);
+        // 执行测试
+        CourseService courseService = proxy.getProxy();
+
+
+
         String courseId = ServletRequestUtils.getStringParameter(req, "courseId", "");
         String courseTitle = ServletRequestUtils.getStringParameter(req, "courseTitle", "");
         String courseIntro = ServletRequestUtils.getStringParameter(req, "courseIntro", "");
